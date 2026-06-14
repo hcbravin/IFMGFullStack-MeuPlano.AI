@@ -1,14 +1,15 @@
 name: meuplanoai
 
 services:
-  backend:
-    container_name: backend_dev
+  backend-dev:
+    container_name: backend-dev
     build:
       context: ./backend
       dockerfile: Dockerfile
       target: development
     volumes:
-      - ./backend/src:/app/src
+      - ./backend:/app
+      - /app/node_modules
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     env_file:
@@ -22,3 +23,14 @@ services:
       target: test
     env_file:
       - ./backend/.env.development
+
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data: 
