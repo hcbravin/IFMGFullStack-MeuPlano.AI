@@ -1,0 +1,211 @@
+# Endpoint HTTP POST para gerar a versão final do plano de aula
+post:
+  summary: Gera a versão final do plano de aula
+  description: >
+    Recebe um rascunho de plano de aula revisado pelo professor e retorna a
+    versão final em formato de relatório, contendo o título, os dados
+    estruturados do plano e um texto pronto para exibição. Continua limitado a
+    UMA única aula.
+  tags:
+    - Planos de Aula
+  operationId: gerarPlanoDeAulaFinal
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - rascunho
+          properties:
+            rascunho:
+              type: object
+              description: Rascunho revisado do plano de aula.
+              required:
+                - titulo
+                - disciplina
+                - curso
+                - nivel
+                - duracao
+                - tema
+                - objetivos
+                - conteudos
+                - metodologia
+                - recursos
+                - avaliacao
+              properties:
+                titulo:
+                  type: string
+                  example: Introdução à Engenharia de Software
+                disciplina:
+                  type: string
+                  example: Engenharia de Software
+                curso:
+                  type: string
+                  description: Tipo ou modalidade do curso.
+                  example: Graduação em Computação
+                nivel:
+                  type: string
+                  description: Nível, série, ano ou período do curso.
+                  example: Iniciante
+                duracao:
+                  type: string
+                  example: 50 minutos
+                tema:
+                  type: string
+                  example: Conceitos iniciais de Engenharia de Software
+                objetivos:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - Compreender o conceito de Engenharia de Software.
+                    - Diferenciar desenvolvimento ad hoc de processos sistemáticos.
+                conteudos:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - Definição de Engenharia de Software
+                    - Noções de processo de software
+                metodologia:
+                  type: string
+                  example: Aula expositiva dialogada com exemplos de sistemas reais.
+                recursos:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - Projetor
+                    - Computador
+                    - Slides
+                avaliacao:
+                  type: string
+                  example: Participação dos estudantes na discussão orientada.
+  responses:
+    '200':
+      description: Plano de aula final gerado com sucesso.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: true
+              mensagem:
+                type: string
+                example: Plano de aula final gerado com sucesso.
+              dados:
+                type: object
+                properties:
+                  titulo:
+                    type: string
+                    description: Título principal do plano de aula final.
+                    example: Introdução à Engenharia de Software
+                  plano:
+                    type: object
+                    description: Dados estruturados do plano de aula (mesmo formato do rascunho).
+                    properties:
+                      titulo:
+                        type: string
+                        example: Introdução à Engenharia de Software
+                      disciplina:
+                        type: string
+                        example: Engenharia de Software
+                      curso:
+                        type: string
+                        example: Graduação em Computação
+                      nivel:
+                        type: string
+                        example: Iniciante
+                      duracao:
+                        type: string
+                        example: 50 minutos
+                      tema:
+                        type: string
+                        example: Conceitos iniciais de Engenharia de Software
+                      objetivos:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - Compreender o conceito de Engenharia de Software.
+                          - Diferenciar desenvolvimento ad hoc de processos sistemáticos.
+                      conteudos:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - Definição de Engenharia de Software
+                          - Noções de processo de software
+                      metodologia:
+                        type: string
+                        example: Aula expositiva dialogada com exemplos de sistemas reais.
+                      recursos:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - Projetor
+                          - Computador
+                          - Slides
+                      avaliacao:
+                        type: string
+                        example: Participação dos estudantes na discussão orientada.
+                  relatorio:
+                    type: string
+                    description: Texto final em formato de relatório, pronto para exibição.
+                    example: |
+                      Plano de Aula: Introdução à Engenharia de Software
+
+                      Disciplina: Engenharia de Software
+                      Duração: 50 minutos
+
+                      Este plano descreve uma única aula introdutória sobre os
+                      conceitos fundamentais da Engenharia de Software.
+    '400':
+      description: Requisição inválida. O rascunho do plano de aula é obrigatório.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: false
+              mensagem:
+                type: string
+                example: O rascunho do plano de aula é obrigatório.
+              dados:
+                nullable: true
+                example: null
+    '401':
+      description: Professor não autenticado.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: false
+              mensagem:
+                type: string
+                example: É necessário estar autenticado para gerar o plano de aula final.
+    '500':
+      description: Erro interno do servidor.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: false
+              mensagem:
+                type: string
+                example: Ocorreu um erro interno ao gerar o plano de aula final.
+              dados:
+                nullable: true
+                example: null

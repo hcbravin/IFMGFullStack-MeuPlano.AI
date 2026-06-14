@@ -1,0 +1,201 @@
+# Endpoint HTTP POST para melhorar um rascunho de plano de aula já existente
+post:
+  summary: Melhora um rascunho de plano de aula
+  description: >
+    Recebe um rascunho de plano de aula já estruturado, junto com orientações em
+    linguagem natural do professor, e retorna uma nova versão do rascunho
+    aprimorada conforme essas orientações. Continua limitado a UMA única aula.
+  tags:
+    - Planos de Aula
+  operationId: melhorarRascunhoPlanoDeAula
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - rascunho
+            - orientacoes
+          properties:
+            rascunho:
+              type: object
+              description: Rascunho atual do plano de aula a ser melhorado.
+              required:
+                - titulo
+                - disciplina
+                - curso
+                - nivel
+                - duracao
+                - tema
+                - objetivos
+                - conteudos
+                - metodologia
+                - recursos
+                - avaliacao
+              properties:
+                titulo:
+                  type: string
+                  example: Introdução à Engenharia de Software
+                disciplina:
+                  type: string
+                  example: Engenharia de Software
+                curso:
+                  type: string
+                  description: Tipo ou modalidade do curso.
+                  example: Graduação em Computação
+                nivel:
+                  type: string
+                  description: Nível, série, ano ou período do curso.
+                  example: Iniciante
+                duracao:
+                  type: string
+                  example: 50 minutos
+                tema:
+                  type: string
+                  example: Conceitos iniciais de Engenharia de Software
+                objetivos:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - Compreender o conceito de Engenharia de Software.
+                    - Diferenciar desenvolvimento ad hoc de processos sistemáticos.
+                conteudos:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - Definição de Engenharia de Software
+                    - Noções de processo de software
+                metodologia:
+                  type: string
+                  example: Aula expositiva dialogada com exemplos de sistemas reais.
+                recursos:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - Projetor
+                    - Computador
+                    - Slides
+                avaliacao:
+                  type: string
+                  example: Participação dos estudantes na discussão orientada.
+            orientacoes:
+              type: string
+              minLength: 1
+              description: Orientações em linguagem natural para melhorar o rascunho.
+              example: Deixe a metodologia mais ativa e inclua uma atividade em grupo.
+  responses:
+    '200':
+      description: Rascunho do plano de aula melhorado com sucesso.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: true
+              mensagem:
+                type: string
+                example: Rascunho do plano de aula melhorado com sucesso.
+              dados:
+                type: object
+                description: Rascunho melhorado, no mesmo formato do rascunho de entrada.
+                properties:
+                  titulo:
+                    type: string
+                    example: Introdução à Engenharia de Software
+                  disciplina:
+                    type: string
+                    example: Engenharia de Software
+                  curso:
+                    type: string
+                    example: Graduação em Computação
+                  nivel:
+                    type: string
+                    example: Iniciante
+                  duracao:
+                    type: string
+                    example: 50 minutos
+                  tema:
+                    type: string
+                    example: Conceitos iniciais de Engenharia de Software
+                  objetivos:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Compreender o conceito de Engenharia de Software.
+                      - Diferenciar desenvolvimento ad hoc de processos sistemáticos.
+                  conteudos:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Definição de Engenharia de Software
+                      - Noções de processo de software
+                  metodologia:
+                    type: string
+                    example: Aula expositiva dialogada combinada com uma atividade prática em grupo.
+                  recursos:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - Projetor
+                      - Computador
+                      - Slides
+                      - Fichas de atividade
+                  avaliacao:
+                    type: string
+                    example: Participação dos estudantes na discussão orientada.
+    '400':
+      description: >
+        Requisição inválida. O rascunho do plano de aula é obrigatório ou as
+        orientações não foram informadas.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: false
+              mensagem:
+                type: string
+                example: O rascunho do plano de aula é obrigatório.
+              dados:
+                nullable: true
+                example: null
+    '401':
+      description: Professor não autenticado.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: false
+              mensagem:
+                type: string
+                example: É necessário estar autenticado para melhorar o plano de aula.
+    '500':
+      description: Erro interno do servidor.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sucesso:
+                type: boolean
+                example: false
+              mensagem:
+                type: string
+                example: Ocorreu um erro interno ao melhorar o rascunho do plano de aula.
+              dados:
+                nullable: true
+                example: null

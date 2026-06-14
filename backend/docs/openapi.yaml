@@ -21,3 +21,7 @@ tags:
 paths:
   /planos-de-aula/rascunho:
     $ref: './paths/planos-de-aula/gerar-rascunho.yaml'
+  /planos-de-aula/rascunho/melhorar:
+    $ref: './paths/planos-de-aula/melhorar-rascunho.yaml'
+  /planos-de-aula/final:
+    $ref: './paths/planos-de-aula/gerar-plano-final.yaml'
