@@ -103,3 +103,4 @@ sequenceDiagram
     API-->>Web: 201 Created - Retorna plano de aula final
     Web-->>Professor: Exibe plano de aula em formato de relatório
 ```
+# IFMGFullStack-MeuPlano.AI
