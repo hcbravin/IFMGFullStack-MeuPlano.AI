@@ -128,7 +128,7 @@ class PlanoDeAulaServico {
         try {
             console.log('Tentando salvar plano no MongoDB...');
             console.log('Sessão ID:', sessaoId);
-            
+
             const dadosParaSalvar = {
                 titulo: planoFinal.titulo,
                 plano: JSON.stringify(planoFinal.plano),
@@ -137,7 +137,7 @@ class PlanoDeAulaServico {
 
             const repositorio = new PlanoDeAulaRepositorio();
             await repositorio.salvar(dadosParaSalvar, sessaoId);
-            
+
             console.log('Plano final salvo com sucesso no MongoDB');
         } catch (erro) {
             console.error('Erro ao salvar plano no MongoDB (nao critico):', erro);

@@ -205,7 +205,7 @@ class PlanoDeAulaControlador {
         return;
       }
 
-      const planoFinal = await this.servico.gerarPlanoFinal(
+      const planoFinal = await this.planoDeAulaServico.gerarPlanoFinal(
         rascunhoRevisado,
         sessaoId
       );
@@ -260,7 +260,7 @@ class PlanoDeAulaControlador {
   }
 
   /**
- * Lista todos os planos de uma sessão
+ * Lista todos os planos de aula de uma sessão
  * 
  * GET /planos-de-aula
  * 
@@ -279,7 +279,7 @@ class PlanoDeAulaControlador {
         return;
       }
 
-      const planos = await this.servico.listarPlanos(sessaoId);
+      const planos = await this.planoDeAulaServico.listarPlanos(sessaoId);
 
       res.status(200).json({
         sucesso: true,
@@ -326,7 +326,7 @@ class PlanoDeAulaControlador {
         return;
       }
 
-      const plano = await this.servico.buscarPlanoPorId(id, sessaoId);
+      const plano = await this.planoDeAulaServico.buscarPlanoPorId(id, sessaoId);
 
       if (!plano) {
         res.status(404).json({
@@ -351,6 +351,7 @@ class PlanoDeAulaControlador {
       });
     }
   }
+
 }
 
 
