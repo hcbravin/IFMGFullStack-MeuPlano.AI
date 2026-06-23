@@ -89,7 +89,7 @@ class PlanoDeAulaServico {
     sessaoId: string,
   ): Promise<PlanoDeAulaFinal> {
     return this.enviarPost<PlanoDeAulaFinal>('/planos-de-aula/final', {
-      rascunho,
+      rascunhoRevisado: rascunho,
       sessaoId,
     });
   }

@@ -394,12 +394,15 @@ body {
 
 .item-titulo {
   font-weight: 500;
-  color: var(--cor-texto);
+  color: #FFF;
 }
 
 .item-data {
   font-size: 0.75rem;
   color: var(--cor-texto-suave);
+  background-color: var(--cor-fundo);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--raio);
 }
 
 /* --- Relatório --- */
